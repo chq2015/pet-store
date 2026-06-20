@@ -111,13 +111,31 @@ function toggleCart() {
 
 function checkout() {
   if (cart.length === 0) { alert('购物车是空的！'); return; }
-  alert('🎉 订单提交成功！总金额：¥' + cart.reduce((s, c) => s + c.price * c.qty, 0) + '\n我们会尽快与您联系确认。');
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const orders = getOrders();
+  orders.push({
+    id: Date.now(),
+    type: 'checkout',
+    data: { items: cart.map(c => ({ name: c.name, price: c.price, qty: c.qty })), total: total },
+    status: 'pending',
+    createdAt: new Date().toLocaleString(),
+  });
+  saveOrders(orders);
+  alert('🎉 订单提交成功！总金额：¥' + total + '\n我们会尽快与您联系确认。');
   cart = [];
   updateCartUI();
   toggleCart();
 }
 
 // ===== Grooming =====
+function getOrders() {
+  return JSON.parse(localStorage.getItem('maomao_orders') || '[]');
+}
+
+function saveOrders(orders) {
+  localStorage.setItem('maomao_orders', JSON.stringify(orders));
+}
+
 function submitGrooming(e) {
   e.preventDefault();
   const data = {
@@ -129,10 +147,18 @@ function submitGrooming(e) {
     phone: document.getElementById('phone').value,
     note: document.getElementById('note').value,
   };
+  const orders = getOrders();
+  orders.push({
+    id: Date.now(),
+    type: 'grooming',
+    data: data,
+    status: 'pending',
+    createdAt: new Date().toLocaleString(),
+  });
+  saveOrders(orders);
   document.getElementById('groomingSuccess').style.display = 'block';
   document.getElementById('groomingForm').reset();
   setTimeout(() => { document.getElementById('groomingSuccess').style.display = 'none'; }, 4000);
-  console.log('预约信息:', data);
 }
 
 // ===== Init =====
@@ -158,5 +184,173 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       }
     });
+  });
+});
+
+// ===== CSV 解析/序列化 =====
+function parseUsersCSV(csv) {
+  const lines = csv.trim().split('\n');
+  if (lines.length < 2) return [];
+  const result = [];
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split(',');
+    if (parts.length >= 2) {
+      result.push({ username: parts[0].trim(), password: parts[1].trim() });
+    }
+  }
+  return result;
+}
+
+function serializeUsersCSV(users) {
+  let csv = 'username,password\n';
+  users.forEach(u => { csv += `${u.username},${u.password}\n`; });
+  return csv;
+}
+
+// ===== 用户存储（CSV 格式在 localStorage） =====
+function getUsers() {
+  const csv = localStorage.getItem('maomao_users_csv');
+  return csv ? parseUsersCSV(csv) : [];
+}
+
+function saveUsers(users) {
+  localStorage.setItem('maomao_users_csv', serializeUsersCSV(users));
+}
+
+// ===== 从 users.csv 文件导入 =====
+async function importUsersFromCSV() {
+  try {
+    const res = await fetch('users.csv');
+    const csvText = await res.text();
+    const fileUsers = parseUsersCSV(csvText);
+    if (fileUsers.length === 0) return;
+
+    const existing = getUsers();
+    const merged = [...existing];
+    fileUsers.forEach(fu => {
+      if (!merged.find(u => u.username === fu.username)) {
+        merged.push(fu);
+      }
+    });
+    saveUsers(merged);
+  } catch (_) {
+    // users.csv 不存在或无法读取，跳过
+  }
+}
+
+// ===== 前端用户登录/注册 =====
+function getCurrentUser() {
+  return localStorage.getItem('maomao_current_user');
+}
+
+function setCurrentUser(username) {
+  if (username) {
+    localStorage.setItem('maomao_current_user', username);
+  } else {
+    localStorage.removeItem('maomao_current_user');
+  }
+  updateAuthUI();
+}
+
+function showLogin() {
+  closeModal('registerModal');
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('loginModal').classList.add('active');
+}
+
+function showRegister() {
+  closeModal('loginModal');
+  document.getElementById('registerError').style.display = 'none';
+  document.getElementById('registerModal').classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+
+  const users = getUsers();
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) {
+    errEl.textContent = '用户名或密码错误';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  setCurrentUser(username);
+  closeModal('loginModal');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  const username = document.getElementById('regUser').value.trim();
+  const password = document.getElementById('regPass').value;
+  const confirm = document.getElementById('regConfirm').value;
+  const errEl = document.getElementById('registerError');
+
+  if (password !== confirm) {
+    errEl.textContent = '两次密码输入不一致';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const users = getUsers();
+  if (users.find(u => u.username === username)) {
+    errEl.textContent = '用户名已存在';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  users.push({ username, password });
+  saveUsers(users);
+  setCurrentUser(username);
+  closeModal('registerModal');
+  document.getElementById('regUser').value = '';
+  document.getElementById('regPass').value = '';
+  document.getElementById('regConfirm').value = '';
+}
+
+function logout() {
+  setCurrentUser(null);
+}
+
+function updateAuthUI() {
+  const link = document.getElementById('authLink');
+  const user = getCurrentUser();
+  if (user) {
+    link.innerHTML = `<span class="auth-user">👤 ${user}</span>
+      <button class="auth-logout" onclick="logout()">退出</button>`;
+    link.href = 'javascript:void(0)';
+    link.onclick = null;
+  } else {
+    link.innerHTML = '👤 登录';
+    link.href = 'javascript:void(0)';
+    link.onclick = () => showLogin();
+  }
+}
+
+// ===== 初始化 =====
+document.addEventListener('DOMContentLoaded', () => {
+  ['loginModal', 'registerModal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', (e) => {
+      if (e.target === document.getElementById(id)) closeModal(id);
+    });
+  });
+
+  importUsersFromCSV();
+  updateAuthUI();
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal('loginModal');
+      closeModal('registerModal');
+    }
   });
 });

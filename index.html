@@ -17,6 +17,7 @@
       <a href="#grooming">预约洗护</a>
       <a href="#supplies">养宠用品</a>
       <a href="#cart" class="cart-btn" onclick="toggleCart()">🛒 <span class="cart-count" id="cartCount">0</span></a>
+      <a href="javascript:void(0)" class="auth-link" id="authLink">👤 登录</a>
     </nav>
   </div>
 </header>
@@ -112,6 +113,52 @@
     <div class="grid" id="suppliesGrid"></div>
   </div>
 </section>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal auth-modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+    <h2>👤 登录</h2>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="loginUser" placeholder="请输入用户名" required>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="loginPass" placeholder="请输入密码" required>
+      </div>
+      <div class="auth-error" id="loginError"></div>
+      <button type="submit" class="submit-btn">登录</button>
+    </form>
+    <p class="auth-switch">还没有账号？<a href="javascript:void(0)" onclick="showRegister()">立即注册</a></p>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal auth-modal">
+    <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+    <h2>📝 注册</h2>
+    <form onsubmit="handleRegister(event)">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="regUser" placeholder="请输入用户名" required>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="regPass" placeholder="请输入密码（至少6位）" minlength="6" required>
+      </div>
+      <div class="form-group">
+        <label>确认密码</label>
+        <input type="password" id="regConfirm" placeholder="请再次输入密码" required>
+      </div>
+      <div class="auth-error" id="registerError"></div>
+      <button type="submit" class="submit-btn">注册</button>
+    </form>
+    <p class="auth-switch">已有账号？<a href="javascript:void(0)" onclick="showLogin()">立即登录</a></p>
+  </div>
+</div>
 
 <!-- Cart Modal -->
 <div class="modal-overlay" id="cartModal">

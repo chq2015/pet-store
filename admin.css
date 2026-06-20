@@ -1,0 +1,44 @@
+/* Admin Login */
+#adminLoginSection { display: flex; align-items: center; min-height: calc(100vh - 80px); }
+.admin-login-box { max-width: 420px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; width: 100%; }
+.admin-login-box h2 { text-align: center; margin-bottom: 24px; font-size: 22px; }
+
+/* Admin Panel */
+.admin-panel { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; margin: 30px 0; }
+.admin-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.admin-panel-header h2 { margin: 0; }
+
+/* Tabs */
+.admin-tabs { display: flex; gap: 8px; border-bottom: 2px solid #f0f0f0; padding-bottom: 12px; margin-bottom: 20px; }
+.admin-tab { padding: 8px 18px; border: none; background: #f5f5f5; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #666; transition: all 0.3s; }
+.admin-tab:hover { background: #eee; }
+.admin-tab.active { background: #e44d5e; color: #fff; }
+.admin-logout-btn { padding: 6px 14px; border: 1px solid #ddd; background: #fff; border-radius: 8px; cursor: pointer; font-size: 13px; color: #999; transition: all 0.3s; }
+.admin-logout-btn:hover { border-color: #e44d5e; color: #e44d5e; }
+
+/* Search bar */
+.user-search-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+.user-search-bar input { flex: 1; padding: 10px 14px; border: 2px solid #eee; border-radius: 10px; font-size: 14px; outline: none; min-width: 150px; }
+.user-search-bar input:focus { border-color: #ff9a9e; }
+
+/* Table */
+.user-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.user-table th, .user-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+.user-table th { background: #fafafa; font-weight: 700; color: #555; position: sticky; top: 0; }
+.user-table tr:hover td { background: #fff5f5; }
+.user-count { text-align: right; font-size: 13px; color: #999; margin-top: 12px; }
+.empty-state { text-align: center; padding: 40px; color: #999; font-size: 15px; }
+
+/* Action buttons */
+.delete-btn { background: none; border: 1px solid #e44d5e; color: #e44d5e; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.3s; }
+.delete-btn:hover { background: #e44d5e; color: #fff; }
+.process-btn { background: none; border: 1px solid #27ae60; color: #27ae60; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.3s; }
+.process-btn:hover { background: #27ae60; color: #fff; }
+
+/* Status tags */
+.tag { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-pending { background: #fff3cd; color: #856404; }
+.tag-processed { background: #d4edda; color: #155724; }
+
+/* Order details */
+.order-detail { font-size: 13px; color: #666; }

@@ -72,6 +72,18 @@ nav a:hover, nav a.active { background: rgba(255,255,255,0.3); }
 .modal-close { float: right; background: none; border: none; font-size: 28px; cursor: pointer; color: #999; line-height: 1; }
 .empty-cart { text-align: center; padding: 40px; color: #999; font-size: 16px; }
 
+/* Auth */
+.auth-link { font-size: 14px !important; }
+.auth-modal form { margin-top: 20px; }
+.auth-error { color: #e44d5e; font-size: 13px; margin-bottom: 12px; display: none; }
+.auth-switch { text-align: center; margin-top: 20px; font-size: 14px; color: #999; }
+.auth-switch a { color: #e44d5e; font-weight: 600; }
+.auth-user { display: inline-flex; align-items: center; gap: 6px; }
+.auth-logout { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 4px 12px; border-radius: 14px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s; }
+.auth-logout:hover { background: rgba(255,255,255,0.3); }
+
+/* Footer */
+
 /* Footer */
 footer { background: #333; color: #ccc; padding: 40px 0; text-align: center; }
 footer p { margin: 4px 0; font-size: 14px; }
