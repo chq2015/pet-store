@@ -57,6 +57,7 @@ function renderSupplies() {
 
 // ===== Cart =====
 function addToCart(id, type) {
+  if (!getCurrentUser()) { showLogin(); return; }
   const item = type === 'pet' ? pets.find(p => p.id === id) : supplies.find(s => s.id === id);
   const existing = cart.find(c => c.id === id && c.type === type);
   if (existing) {
@@ -110,6 +111,7 @@ function toggleCart() {
 }
 
 function checkout() {
+  if (!getCurrentUser()) { showLogin(); return; }
   if (cart.length === 0) { alert('购物车是空的！'); return; }
   const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
   const orders = getOrders();
@@ -138,6 +140,7 @@ function saveOrders(orders) {
 
 function submitGrooming(e) {
   e.preventDefault();
+  if (!getCurrentUser()) { showLogin(); return; }
   const data = {
     petType: document.getElementById('petType').value,
     petName: document.getElementById('petName').value,
