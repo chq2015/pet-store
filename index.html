@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毛毛宠物 - 用心爱宠</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="logo">🐾 毛毛<span>宠物</span></div>
+    <nav>
+      <a href="#pets" class="active">售卖宠物</a>
+      <a href="#grooming">预约洗护</a>
+      <a href="#supplies">养宠用品</a>
+      <a href="#cart" class="cart-btn" onclick="toggleCart()">🛒 <span class="cart-count" id="cartCount">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>找到属于你的 <span>毛孩子</span></h1>
+    <p>我们提供健康纯种宠物、专业洗护服务及优质养宠用品，让每一只宠物都能得到最好的关爱。</p>
+    <a href="#pets" class="hero-btn">立即挑选宠物 →</a>
+  </div>
+</section>
+
+<!-- Pets Section -->
+<section class="section" id="pets">
+  <div class="container">
+    <h2 class="section-title">🐶 售卖宠物</h2>
+    <p class="section-subtitle">每一只宠物都经过健康检查，疫苗齐全，带证出售</p>
+    <div class="grid" id="petGrid"></div>
+  </div>
+</section>
+
+<!-- Grooming Section -->
+<section class="section bg-light" id="grooming">
+  <div class="container">
+    <h2 class="section-title">🧴 预约洗护</h2>
+    <p class="section-subtitle">专业宠物美容师，温柔呵护，让毛孩子焕然一新</p>
+    <div class="form-wrapper">
+      <form id="groomingForm" onsubmit="submitGrooming(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>宠物种类</label>
+            <select id="petType" required>
+              <option value="">请选择</option>
+              <option value="狗">🐕 狗狗</option>
+              <option value="猫">🐈 猫咪</option>
+              <option value="其他">🐾 其他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>宠物姓名</label>
+            <input type="text" id="petName" placeholder="如：豆豆" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>服务项目</label>
+          <select id="serviceType" required>
+            <option value="">请选择服务</option>
+            <option value="基础洗护">基础洗护 ¥88</option>
+            <option value="精致美容">精致美容 ¥168</option>
+            <option value="剪毛造型">剪毛造型 ¥218</option>
+            <option value="SPA护理">SPA护理 ¥298</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>预约日期</label>
+            <input type="date" id="apptDate" required>
+          </div>
+          <div class="form-group">
+            <label>预约时间</label>
+            <select id="apptTime" required>
+              <option value="">请选择</option>
+              <option value="09:00-10:00">09:00-10:00</option>
+              <option value="10:00-11:00">10:00-11:00</option>
+              <option value="11:00-12:00">11:00-12:00</option>
+              <option value="14:00-15:00">14:00-15:00</option>
+              <option value="15:00-16:00">15:00-16:00</option>
+              <option value="16:00-17:00">16:00-17:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>联系电话</label>
+          <input type="tel" id="phone" placeholder="请输入手机号" required>
+        </div>
+        <div class="form-group">
+          <label>备注（可选）</label>
+          <textarea id="note" placeholder="如：有皮肤敏感、需要剪短等"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">立即预约</button>
+        <div class="success-msg" id="groomingSuccess">✅ 预约成功！我们会尽快联系您确认。</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Supplies Section -->
+<section class="section" id="supplies">
+  <div class="container">
+    <h2 class="section-title">🎒 养宠用品</h2>
+    <p class="section-subtitle">精选优质宠物食品、玩具、窝具等日常用品</p>
+    <div class="grid" id="suppliesGrid"></div>
+  </div>
+</section>
+
+<!-- Cart Modal -->
+<div class="modal-overlay" id="cartModal">
+  <div class="modal">
+    <button class="modal-close" onclick="toggleCart()">&times;</button>
+    <h2>🛒 购物车</h2>
+    <div id="cartItems"></div>
+    <div class="cart-total">合计：¥<span id="cartTotal">0</span></div>
+    <button class="checkout-btn" onclick="checkout()">去结算</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>🐾 毛毛宠物 - 用心爱宠</p>
+    <p>© 2026 Maomao Pet. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

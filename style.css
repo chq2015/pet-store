@@ -1,0 +1,85 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif; color: #333; background: #f8f9fa; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); padding: 16px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+header .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 28px; font-weight: 800; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+.logo span { color: #e44d5e; }
+nav a { text-decoration: none; color: #fff; margin-left: 24px; font-weight: 600; font-size: 15px; padding: 6px 14px; border-radius: 20px; transition: all 0.3s; }
+nav a:hover, nav a.active { background: rgba(255,255,255,0.3); }
+.cart-btn { position: relative; }
+.cart-count { position: absolute; top: -6px; right: -6px; background: #e44d5e; color: #fff; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 60px 0; text-align: center; }
+.hero h1 { font-size: 42px; color: #333; margin-bottom: 16px; }
+.hero h1 span { color: #e44d5e; }
+.hero p { font-size: 18px; color: #666; max-width: 600px; margin: 0 auto 30px; }
+.hero-btn { display: inline-block; background: #e44d5e; color: #fff; padding: 14px 40px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(228,77,94,0.3); }
+.hero-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(228,77,94,0.4); }
+
+/* Section Titles */
+.section { padding: 60px 0; }
+.section-title { text-align: center; font-size: 32px; margin-bottom: 8px; color: #333; }
+.section-subtitle { text-align: center; color: #999; font-size: 15px; margin-bottom: 40px; }
+.bg-light { background: #fff; }
+
+/* Pet / Product Grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+.card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: all 0.3s; cursor: pointer; border: 1px solid #f0f0f0; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+.card-img { width: 100%; height: 220px; object-fit: cover; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 60px; }
+.card-body { padding: 16px 18px 20px; }
+.card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.card-meta { font-size: 13px; color: #999; margin-bottom: 8px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.price { font-size: 20px; font-weight: 800; color: #e44d5e; }
+.price::before { content: '¥'; font-size: 14px; }
+.add-cart { background: #e44d5e; color: #fff; border: none; padding: 8px 18px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+.add-cart:hover { background: #c0394a; transform: scale(1.05); }
+
+/* Grooming Form */
+.form-wrapper { max-width: 600px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; color: #555; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 2px solid #eee; border-radius: 10px; font-size: 14px; transition: all 0.3s; outline: none; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #ff9a9e; }
+.form-group textarea { height: 80px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.submit-btn { width: 100%; background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: #fff; border: none; padding: 14px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,154,158,0.4); }
+.success-msg { display: none; text-align: center; padding: 20px; background: #d4edda; color: #155724; border-radius: 10px; margin-top: 16px; font-weight: 600; }
+
+/* Cart Modal */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 200; justify-content: center; align-items: center; }
+.modal-overlay.active { display: flex; }
+.modal { background: #fff; border-radius: 16px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+.modal h2 { margin-bottom: 20px; font-size: 22px; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 600; }
+.cart-item-price { color: #e44d5e; font-weight: 700; }
+.cart-item-qty { display: flex; align-items: center; gap: 8px; }
+.cart-item-qty button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.cart-item-qty button:hover { background: #f5f5f5; }
+.cart-total { text-align: right; font-size: 20px; font-weight: 800; margin: 20px 0; }
+.cart-total span { color: #e44d5e; }
+.checkout-btn { width: 100%; background: #e44d5e; color: #fff; border: none; padding: 14px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; }
+.checkout-btn:hover { background: #c0394a; }
+.modal-close { float: right; background: none; border: none; font-size: 28px; cursor: pointer; color: #999; line-height: 1; }
+.empty-cart { text-align: center; padding: 40px; color: #999; font-size: 16px; }
+
+/* Footer */
+footer { background: #333; color: #ccc; padding: 40px 0; text-align: center; }
+footer p { margin: 4px 0; font-size: 14px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav a { margin-left: 12px; font-size: 13px; padding: 4px 10px; }
+  .hero h1 { font-size: 28px; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-wrapper { padding: 24px; }
+}
